@@ -35,7 +35,7 @@ public class RobberBehaviour : MonoBehaviour
         Leaf hasGotMoney = new Leaf("Has Money", HasMoney);
         Selector openDoor = new Selector("Open the Door");
         Leaf goToBackDoor = new Leaf("Go To Back Door", GoToBackDoor);
-        Leaf goToFrontDoor = new Leaf("Go To Back Door", GoToFrontDoor);
+        Leaf goToFrontDoor = new Leaf("Go To Front Door", GoToFrontDoor);
 
         Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond);
         Leaf goToVan = new Leaf("Go To Van", GoToVan);
