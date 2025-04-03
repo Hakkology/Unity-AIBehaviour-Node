@@ -89,9 +89,9 @@ public class RobberBehaviour : MonoBehaviour
         return state;
     }
 
-    public NodeState DeliverDiamond(GameObject Diamond)
+    public NodeState DeliverDiamond(GameObject van)
     {
-        NodeState state = GoToLocation(Van.transform.position);
+        NodeState state = GoToLocation(van.transform.position);
         if (state == NodeState.SUCCESS)
         {
             Diamond.SetActive(false);
