@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct NodeLevel{
+    public int level;
+    public Node Node;
+}
 public enum NodeState 
 {
     SUCCESS,
@@ -20,4 +24,6 @@ public class Node
     public Node() {}
     public Node(string name) =>  NodeName = name;
     public void AddChild(Node node) => childNodes.Add(node);
+    public virtual NodeState Process() => childNodes[currentChild].Process();
+    
 }

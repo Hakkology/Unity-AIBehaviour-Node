@@ -7,19 +7,25 @@ public class RootNode : Node
     private string debugName;
     public RootNode() => NodeName = "Root";
     public RootNode(string name)  => NodeName = name;
+    public override NodeState Process() => childNodes[currentChild].Process();
+    
+
     public void PrintTree()
     {
         debugName = "";
-        PrintTreeRecursive(this, "");
+        NodeLevel startNode = new NodeLevel { level = 0, Node = this };
+        PrintTreeRecursive(startNode);
         Debug.Log(debugName);
     }
     
-    private void PrintTreeRecursive(Node node, string indent)
+    private void PrintTreeRecursive(NodeLevel nodeLevel)
     {
-        debugName += indent + node.NodeName + "\n";
-        foreach (Node child in node.childNodes)
+        debugName += "Level " + nodeLevel.level + ": " + nodeLevel.Node.NodeName + "\n";
+        
+        foreach (Node child in nodeLevel.Node.childNodes)
         {
-            PrintTreeRecursive(child, indent + "  ");
+            NodeLevel childLevel = new NodeLevel { level = nodeLevel.level + 1, Node = child };
+            PrintTreeRecursive(childLevel);
         }
     }
 }
