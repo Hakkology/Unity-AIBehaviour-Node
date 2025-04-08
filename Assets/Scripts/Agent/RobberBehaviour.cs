@@ -12,6 +12,8 @@ public class RobberBehaviour : AgentBehaviour
     public GameObject BackDoor;
     public GameObject FrontDoor;
 
+    private GameObject currentObject;
+
     [Range(0, 1000)]
     public int money = 800;
 
@@ -35,7 +37,7 @@ public class RobberBehaviour : AgentBehaviour
 
         stealSomething.AddChild(goToDiamond);
         stealSomething.AddChild(goToMonaLisaPainting);
-        
+
         invertMoney.AddChild(hasGotMoney);
 
         steal.AddChild(invertMoney);
@@ -48,7 +50,7 @@ public class RobberBehaviour : AgentBehaviour
 
     public NodeState GoToDiamond() => GoPickUpDiamond();
     public NodeState GoToMonaLisaPainting() => GoPickUpMonaLisaPainting();
-    public NodeState GoToVan() => DeliverDiamond();
+    public NodeState GoToVan() => DeliverGoods();
     public NodeState GoToBackDoor() => GoToDoor(BackDoor);
     public NodeState GoToFrontDoor() => GoToDoor(FrontDoor);
 
@@ -61,9 +63,11 @@ public class RobberBehaviour : AgentBehaviour
 
     private NodeState GoPickUpMonaLisaPainting()
     {
+        if (!MonaLisaPainting.activeSelf) return NodeState.FAILURE;
         NodeState state = GoToLocation(MonaLisaPainting.transform.position);
         if (state == NodeState.SUCCESS)
         {
+            currentObject = MonaLisaPainting;
             MonaLisaPainting.transform.parent = this.gameObject.transform;
         }
         
@@ -72,21 +76,23 @@ public class RobberBehaviour : AgentBehaviour
 
     public NodeState GoPickUpDiamond()
     {
+        if (!Diamond.activeSelf) return NodeState.FAILURE;
         NodeState state = GoToLocation(Diamond.transform.position);
         if (state == NodeState.SUCCESS)
         {
+            currentObject = Diamond;
             Diamond.transform.parent = this.gameObject.transform;
         }
         
         return state;
     }
 
-    public NodeState DeliverDiamond()
+    public NodeState DeliverGoods()
     {
         NodeState state = GoToLocation(Van.transform.position);
         if (state == NodeState.SUCCESS)
         {
-            Diamond.SetActive(false);
+            currentObject.SetActive(false);
             money += 300;
         }
         
@@ -100,7 +106,7 @@ public class RobberBehaviour : AgentBehaviour
         {
             if (!door.GetComponent<Lock>().isLocked)
             {
-                door.SetActive(false);
+                door.GetComponent<NavMeshObstacle>().enabled = false;
                 return NodeState.SUCCESS;
             }
 
