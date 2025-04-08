@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public enum ActionState {IDLE, WORKING};
 
-public class RobberBehaviour : MonoBehaviour
+public class RobberBehaviour : AgentBehaviour
 {
     public GameObject Diamond;
     public GameObject Van;
@@ -15,21 +15,8 @@ public class RobberBehaviour : MonoBehaviour
     [Range(0, 1000)]
     public int money = 800;
 
-
-    ActionState state = ActionState.IDLE;
-    RootNode tree;
-    NodeState treeStatus = NodeState.RUNNING;
-    NavMeshAgent agent;
-
-    void Awake() 
+    public override Sequence Behave()
     {
-        agent = GetComponent<NavMeshAgent>();
-    }
-    
-    void Start()
-    {
-        tree = new RootNode();
-
         Sequence steal = new Sequence("Steal Something");
 
         Leaf hasGotMoney = new Leaf("Has Money", HasMoney);
@@ -48,23 +35,7 @@ public class RobberBehaviour : MonoBehaviour
         steal.AddChild(goToDiamond);
         steal.AddChild(goToVan);
 
-        tree.AddChild(steal);
-        tree.Process();
-
-        // Node eat = new Node("Eat Something");
-        // Node pizza = new Node("Go To Pizza Shop");
-        // Node buy = new Node("Buy Pizza");
-
-        // eat.AddChild(pizza);
-        // eat.AddChild(buy);
-        // tree.AddChild(eat);
-
-        tree.PrintTree();
-    }
-
-    void Update() {
-        if (treeStatus != NodeState.SUCCESS)
-            treeStatus = tree.Process();
+        return steal;
     }
 
     public NodeState GoToDiamond() => GoPickUpDiamond(Diamond);
@@ -118,27 +89,5 @@ public class RobberBehaviour : MonoBehaviour
         {
             return state;
         }
-    }
-
-    NodeState GoToLocation(Vector3 destination)
-    {
-        float distanceToTarget = Vector3.Distance(destination, this.transform.position);
-
-        if (state == ActionState.IDLE)
-        {
-            agent.SetDestination(destination);
-            state =ActionState.WORKING;
-        }
-        else if(Vector3.Distance(agent.pathEndPosition, destination) >= 2)
-        {
-            state = ActionState.IDLE;
-            return NodeState.FAILURE;
-        }
-        else if (distanceToTarget < 2)
-        {
-            state = ActionState.IDLE;
-            return NodeState.SUCCESS;
-        }
-        return NodeState.RUNNING;
     }
 }
