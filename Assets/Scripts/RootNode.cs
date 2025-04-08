@@ -7,8 +7,11 @@ public class RootNode : Node
     private string debugName;
     public RootNode() => NodeName = "Root";
     public RootNode(string name)  => NodeName = name;
-    public override NodeState Process() => childNodes[currentChild].Process();
-    
+    public override NodeState Process()
+    {
+        if(childNodes.Count == 0) return NodeState.SUCCESS;
+        return childNodes[currentChild].Process();
+    }
 
     public void PrintTree()
     {

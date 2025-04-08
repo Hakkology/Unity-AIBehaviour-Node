@@ -25,6 +25,7 @@ public class AgentBehaviour : MonoBehaviour {
         tree.PrintTree();
 
         NodeStateCheck = new WaitForSeconds(Random.Range(0.1F, 0.5F));
+        StartCoroutine(Behave());
     }
 
     public virtual Sequence ConfigureSequence()
@@ -37,14 +38,14 @@ public class AgentBehaviour : MonoBehaviour {
         while (true)
         {
             treeStatus = tree.Process();
-            yield return null;
+            yield return NodeStateCheck;
         }
     }
 
-    void Update() {
-        if (treeStatus != NodeState.SUCCESS)
-            treeStatus = tree.Process();
-    }
+    // void Update() {
+    //     if (treeStatus != NodeState.SUCCESS)
+    //         treeStatus = tree.Process();
+    // }
 
     protected NodeState GoToLocation(Vector3 destination)
     {
