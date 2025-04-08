@@ -1,13 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum ActionState {IDLE, WORKING};
-
 public class RobberBehaviour : AgentBehaviour
 {
     public GameObject Diamond;
+    public GameObject MonaLisaPainting;
     public GameObject Van;
     public GameObject BackDoor;
     public GameObject FrontDoor;
@@ -21,29 +21,34 @@ public class RobberBehaviour : AgentBehaviour
 
         Leaf hasGotMoney = new Leaf("Has Money", HasMoney);
         Selector openDoor = new Selector("Open the Door");
+        Selector stealSomething = new Selector("Steal Something");
         Inverter invertMoney = new Inverter("Invert Money");
         Leaf goToBackDoor = new Leaf("Go To Back Door", GoToBackDoor);
         Leaf goToFrontDoor = new Leaf("Go To Front Door", GoToFrontDoor);
 
+        Leaf goToMonaLisaPainting = new Leaf("Go To Mona Lisa Painting", GoToMonaLisaPainting);
         Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond);
         Leaf goToVan = new Leaf("Go To Van", GoToVan);
 
         openDoor.AddChild(goToFrontDoor);
         openDoor.AddChild(goToBackDoor);
 
-        // steal.AddChild(hasGotMoney);
+        stealSomething.AddChild(goToDiamond);
+        stealSomething.AddChild(goToMonaLisaPainting);
+        
         invertMoney.AddChild(hasGotMoney);
 
         steal.AddChild(invertMoney);
         steal.AddChild(openDoor);
-        steal.AddChild(goToDiamond);
+        steal.AddChild(stealSomething);
         steal.AddChild(goToVan);
 
         return steal;
     }
 
-    public NodeState GoToDiamond() => GoPickUpDiamond(Diamond);
-    public NodeState GoToVan() => DeliverDiamond(Van);
+    public NodeState GoToDiamond() => GoPickUpDiamond();
+    public NodeState GoToMonaLisaPainting() => GoPickUpMonaLisaPainting();
+    public NodeState GoToVan() => DeliverDiamond();
     public NodeState GoToBackDoor() => GoToDoor(BackDoor);
     public NodeState GoToFrontDoor() => GoToDoor(FrontDoor);
 
@@ -53,7 +58,19 @@ public class RobberBehaviour : AgentBehaviour
             return NodeState.FAILURE;
         return NodeState.SUCCESS;
     }
-    public NodeState GoPickUpDiamond(GameObject Diamond)
+
+    private NodeState GoPickUpMonaLisaPainting()
+    {
+        NodeState state = GoToLocation(MonaLisaPainting.transform.position);
+        if (state == NodeState.SUCCESS)
+        {
+            MonaLisaPainting.transform.parent = this.gameObject.transform;
+        }
+        
+        return state;
+    }
+
+    public NodeState GoPickUpDiamond()
     {
         NodeState state = GoToLocation(Diamond.transform.position);
         if (state == NodeState.SUCCESS)
@@ -64,9 +81,9 @@ public class RobberBehaviour : AgentBehaviour
         return state;
     }
 
-    public NodeState DeliverDiamond(GameObject van)
+    public NodeState DeliverDiamond()
     {
-        NodeState state = GoToLocation(van.transform.position);
+        NodeState state = GoToLocation(Van.transform.position);
         if (state == NodeState.SUCCESS)
         {
             Diamond.SetActive(false);

@@ -2156,9 +2156,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Diamond: {fileID: 1550492363}
+  MonaLisaPainting: {fileID: 1904932022}
   Van: {fileID: 864086524}
   BackDoor: {fileID: 919599686}
   FrontDoor: {fileID: 1791870521}
+  money: 800
 --- !u!1 &716268924
 GameObject:
   m_ObjectHideFlags: 0

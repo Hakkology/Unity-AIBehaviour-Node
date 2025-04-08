@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum ActionState {IDLE, WORKING};
+
 public class AgentBehaviour : MonoBehaviour {
     
     protected ActionState state = ActionState.IDLE;
