@@ -9,15 +9,9 @@ public class Inverter : Node
     {
         NodeState childStatus = childNodes[currentChild].Process();
         if (childStatus == NodeState.RUNNING) return NodeState.RUNNING;
-        if (childStatus == NodeState.FAILURE) return childStatus;
-        
-        currentChild++;
-        if (currentChild >= childNodes.Count) 
-        {
-            currentChild = 0;
+        if (childStatus == NodeState.FAILURE) 
             return NodeState.SUCCESS;
-        }
-
-        return NodeState.RUNNING;
+        else
+            return NodeState.FAILURE;
     }
 }

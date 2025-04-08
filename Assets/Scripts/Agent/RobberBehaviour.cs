@@ -15,12 +15,13 @@ public class RobberBehaviour : AgentBehaviour
     [Range(0, 1000)]
     public int money = 800;
 
-    public override Sequence Behave()
+    public override Sequence ConfigureSequence()
     {
         Sequence steal = new Sequence("Steal Something");
 
         Leaf hasGotMoney = new Leaf("Has Money", HasMoney);
         Selector openDoor = new Selector("Open the Door");
+        Inverter invertMoney = new Inverter("Invert Money");
         Leaf goToBackDoor = new Leaf("Go To Back Door", GoToBackDoor);
         Leaf goToFrontDoor = new Leaf("Go To Front Door", GoToFrontDoor);
 
@@ -30,7 +31,10 @@ public class RobberBehaviour : AgentBehaviour
         openDoor.AddChild(goToFrontDoor);
         openDoor.AddChild(goToBackDoor);
 
-        steal.AddChild(hasGotMoney);
+        // steal.AddChild(hasGotMoney);
+        invertMoney.AddChild(hasGotMoney);
+
+        steal.AddChild(invertMoney);
         steal.AddChild(openDoor);
         steal.AddChild(goToDiamond);
         steal.AddChild(goToVan);
@@ -45,7 +49,7 @@ public class RobberBehaviour : AgentBehaviour
 
     public NodeState HasMoney()
     {
-        if (money >= 500) 
+        if (money < 500) 
             return NodeState.FAILURE;
         return NodeState.SUCCESS;
     }

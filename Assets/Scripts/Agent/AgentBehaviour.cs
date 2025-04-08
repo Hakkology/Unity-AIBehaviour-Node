@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +9,8 @@ public class AgentBehaviour : MonoBehaviour {
     protected NodeState treeStatus = NodeState.RUNNING;
     protected NavMeshAgent agent;
 
+    WaitForSeconds NodeStateCheck;
+
     void Awake() 
     {
         agent = GetComponent<NavMeshAgent>();
@@ -16,15 +19,26 @@ public class AgentBehaviour : MonoBehaviour {
     void Start()
     {
         tree = new RootNode();
-        tree.AddChild(Behave());
+        tree.AddChild(ConfigureSequence());
 
         tree.Process();
         tree.PrintTree();
+
+        NodeStateCheck = new WaitForSeconds(Random.Range(0.1F, 0.5F));
     }
 
-    public virtual Sequence Behave()
+    public virtual Sequence ConfigureSequence()
     {
         return new Sequence("Default");
+    }
+
+    IEnumerator Behave()
+    {
+        while (true)
+        {
+            treeStatus = tree.Process();
+            yield return null;
+        }
     }
 
     void Update() {
