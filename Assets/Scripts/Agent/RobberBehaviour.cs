@@ -23,14 +23,14 @@ public class RobberBehaviour : AgentBehaviour
 
         Leaf hasGotMoney = new Leaf("Has Money", HasMoney);
         Selector openDoor = new Selector("Open the Door");
-        Selector stealSomething = new Selector("Steal Something");
+        PrioritySelector stealSomething = new PrioritySelector("Steal Something");
         Inverter invertMoney = new Inverter("Invert Money");
         Leaf goToBackDoor = new Leaf("Go To Back Door", GoToBackDoor);
         Leaf goToFrontDoor = new Leaf("Go To Front Door", GoToFrontDoor);
 
         Leaf goToMonaLisaPainting = new Leaf("Go To Mona Lisa Painting", GoToMonaLisaPainting);
-        Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond);
-        Leaf goToVan = new Leaf("Go To Van", GoToVan);
+        Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond, 2);
+        Leaf goToVan = new Leaf("Go To Van", GoToVan, 1);
 
         openDoor.AddChild(goToFrontDoor);
         openDoor.AddChild(goToBackDoor);

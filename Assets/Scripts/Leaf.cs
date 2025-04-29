@@ -15,6 +15,13 @@ public class Leaf : Node
         ProcessMethod = processMethod;
     }
 
+    public Leaf(string name, Tick processMethod, int order) 
+    {
+        NodeName = name;
+        ProcessMethod = processMethod;
+        sortOrder = order;
+    }
+
     public override NodeState Process()
     {
         if (ProcessMethod != null) return ProcessMethod();

@@ -19,10 +19,16 @@ public class Node
     public string NodeName;
 
     public List<Node> childNodes = new List<Node>();
+    public int sortOrder;
     public int currentChild = 0;
 
     public Node() {}
     public Node(string name) =>  NodeName = name;
+    public Node(string name, int order) {
+        this.NodeName = name;
+        this.sortOrder = order;
+    }
+    
     public void AddChild(Node node) => childNodes.Add(node);
     public virtual NodeState Process() => childNodes[currentChild].Process();
     
