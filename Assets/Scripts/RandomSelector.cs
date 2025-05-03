@@ -1,29 +1,31 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class PrioritySelector : Node
+public class RandomSelector : Node
 {
     Node [] nodeArray;
-    private bool isSorted = false;
-    public PrioritySelector(string name)
+    private bool isShuffled = false;
+    public RandomSelector(string name)
     {
         NodeName = name;
     }
 
-    void OrderNodes()
+    void RandomizeNodes()
     {
         // nodeArray = childNodes.ToArray();
         // Sort(nodeArray, 0, childNodes.Count-1);
         // childNodes = new List<Node>(nodeArray);
-        childNodes = childNodes.OrderBy(n => n.sortOrder).ToList();
+        // childNodes = childNodes.OrderBy(n => n.sortOrder).ToList();
+        childNodes = childNodes.OrderBy(n => Random.value).ToList();
     }
 
     public override NodeState Process()
     {
-        if (!isSorted)
+        if (!isShuffled)
         {
-            OrderNodes();
-            isSorted = true;
+            RandomizeNodes();
+            isShuffled = true;
         }
 
         NodeState childStatus = childNodes[currentChild].Process();
@@ -31,7 +33,7 @@ public class PrioritySelector : Node
         if (childStatus == NodeState.SUCCESS) {
             // childNodes[currentChild].sortOrder = 1;
             currentChild = 0;
-            isSorted = false;
+            isShuffled = false;
             return NodeState.SUCCESS;
         } 
         // else
@@ -42,7 +44,7 @@ public class PrioritySelector : Node
         currentChild++;
         if (currentChild >= childNodes.Count) {
             currentChild = 0;
-            isSorted = false;
+            isShuffled = false;
             return NodeState.FAILURE;
         }
 
@@ -59,6 +61,19 @@ public class PrioritySelector : Node
         for (int i = 0; i < ordered.Length; i++)
         {
             array[low + i] = ordered[i];
+        }
+    }
+
+    void Randomize()
+    {
+        int n = childNodes.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = UnityEngine.Random.Range(0, n + 1);
+            Node temp = childNodes[k];
+            childNodes[k] = childNodes[n];
+            childNodes[n] = temp;
         }
     }
 
