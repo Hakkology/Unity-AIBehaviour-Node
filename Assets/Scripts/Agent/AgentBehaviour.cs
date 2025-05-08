@@ -12,6 +12,7 @@ public class AgentBehaviour : MonoBehaviour {
     protected NavMeshAgent agent;
 
     WaitForSeconds NodeStateCheck;
+    Vector3 rememberedLocation;
 
     void Awake() 
     {
@@ -69,5 +70,33 @@ public class AgentBehaviour : MonoBehaviour {
             return NodeState.SUCCESS;
         }
         return NodeState.RUNNING;
+    }
+
+    public NodeState CanSee(Vector3 target, string tag, float distance, float maxAngle)
+    {
+        Vector3 directionToTarget = target - this.transform.position;
+        float angle = Vector3.Angle(directionToTarget, this.transform.forward);
+
+        if (angle <= maxAngle && directionToTarget.magnitude <= distance)
+        {
+            RaycastHit hitInfo;
+            if (Physics.Raycast(this.transform.position, directionToTarget, out hitInfo))
+            {
+                if(hitInfo.collider.gameObject.CompareTag(tag))
+                {
+                    return NodeState.SUCCESS;
+                }
+            }
+        }
+        return NodeState.FAILURE;
+    }
+
+    public NodeState Flee(Vector3 locationOfFear, float distanceFear)
+    {
+        if (state == ActionState.IDLE)
+        {
+            rememberedLocation = this.transform.position + (transform.position - locationOfFear).normalized * distanceFear;
+        }
+        return GoToLocation(rememberedLocation);
     }
 }
