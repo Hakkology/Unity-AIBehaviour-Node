@@ -31,5 +31,12 @@ public class Node
     
     public void AddChild(Node node) => childNodes.Add(node);
     public virtual NodeState Process() => childNodes[currentChild].Process();
+    public void Reset() 
+    {
+        foreach (var n in childNodes){
+            n.Reset();
+        }
+        currentChild = 0;
+    }
     
 }

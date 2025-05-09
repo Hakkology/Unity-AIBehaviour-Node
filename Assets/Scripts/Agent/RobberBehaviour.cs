@@ -24,63 +24,81 @@ public class RobberBehaviour : AgentBehaviour
     [Range(0, 1000)]
     public int money = 800;
 
-    public override Sequence ConfigureSequence()
+    public override Node ConfigureSequence()
     {
-        Sequence steal = new Sequence("Steal Something");
 
-        Leaf hasGotMoney = new Leaf("Has Money", HasMoney);
-        PrioritySelector openDoor = new PrioritySelector("Open the Door");
+        // s4
+        Leaf goToVan = new Leaf("Go To Van", GoToVan);
+
+        // s3
         RandomSelector stealSomething = new RandomSelector("Steal Something");
-        Inverter invertMoney = new Inverter("Invert Money");
-        goToBackDoor = new Leaf("Go To Back Door", GoToBackDoor, 2);
-        goToFrontDoor = new Leaf("Go To Front Door", GoToFrontDoor, 1);
-
         for (int i = 0; i < art.Length; i++)
         {
             Leaf gta = new Leaf("Go To " + art[i].name, i, GoToArt);
             stealSomething.AddChild(gta);
         }
 
-        // Leaf goToMonaLisaPainting = new Leaf("Go To Mona Lisa Painting", GoToMonaLisaPainting,1);
-        // Leaf goToDiamond = new Leaf("Go To Diamond", GoToDiamond, 2);
-        // Leaf goToArt1 = new Leaf("GoToArt1", GoToArt);
-        // Leaf goToArt2 = new Leaf("GoToArt2", GoToArt2);
-        // Leaf goToArt3 = new Leaf("GoToArt3", GoToArt3);
-        // Leaf goToArt4 = new Leaf("GoToArt4", GoToArt4);
-        // Leaf goToArt5 = new Leaf("GoToArt5", GoToArt5);
-        // Leaf goToArt6 = new Leaf("GoToArt6", GoToArt6);
-        // Leaf goToArt7 = new Leaf("GoToArt7", GoToArt7);
-        
-        Leaf goToVan = new Leaf("Go To Van", GoToVan);
-
+        // s2
+        PrioritySelector openDoor = new PrioritySelector("Open the Door");
+        goToBackDoor = new Leaf("Go To Back Door", GoToBackDoor, 2);
+        goToFrontDoor = new Leaf("Go To Front Door", GoToFrontDoor, 1);
         openDoor.AddChild(goToFrontDoor);
         openDoor.AddChild(goToBackDoor);
 
-        // stealSomething.AddChild(goToDiamond);
-        // stealSomething.AddChild(goToMonaLisaPainting);
-        // stealSomething.AddChild(goToArt1);
-        // stealSomething.AddChild(goToArt2);
-        // stealSomething.AddChild(goToArt3);
-        // stealSomething.AddChild(goToArt4);
-        // stealSomething.AddChild(goToArt5);
-        // stealSomething.AddChild(goToArt6);
-        // stealSomething.AddChild(goToArt7);
-
+        // s1
+        Leaf hasGotMoney = new Leaf("Has Money", HasMoney);
+        Inverter invertMoney = new Inverter("Invert Money");
         invertMoney.AddChild(hasGotMoney);
 
+        // kaçış
         Sequence runAway = new Sequence("Cop Interaction");
         Leaf canSeeCop = new Leaf("Can See Cop", CanSeeCop);
         Leaf fleeFromCop = new Leaf("Run Away", FleeFromCop);
-
         runAway.AddChild(canSeeCop);
         runAway.AddChild(fleeFromCop);
+        
+        Inverter cantSeeCop = new Inverter("Cant See Cop");
+        cantSeeCop.AddChild(canSeeCop);
 
-        steal.AddChild(invertMoney);
+        Sequence s1 = new Sequence ("s1");
+        s1.AddChild(invertMoney);
+
+        Sequence s2 = new Sequence ("s2");
+        s2.AddChild(cantSeeCop);
+        s2.AddChild(openDoor);
+
+        Sequence s3 = new Sequence ("s3");
+        s3.AddChild(cantSeeCop);
+        s3.AddChild (stealSomething);
+
+        Sequence s4 = new Sequence ("s4");
+        s4.AddChild(cantSeeCop);
+        s4.AddChild (goToVan);
+
+        RootNode stealConditions = new RootNode("Steal Conditions");
+        Sequence conditions = new Sequence ("Conditions");
+        conditions.AddChild(cantSeeCop);
+        conditions.AddChild(invertMoney);
+        stealConditions.AddChild(conditions);
+        DependencySequence steal = new DependencySequence("Steal Something", stealConditions, agent);
+
+        // steal.AddChild(s1);
+        // steal.AddChild(s2);
+        // steal.AddChild(s3);
+        // steal.AddChild(s4);
+
+        // steal.AddChild(invertMoney);
         steal.AddChild(openDoor);
-        steal.AddChild(stealSomething);
-        steal.AddChild(goToVan);
 
-        return steal;
+        Selector stealWithFallBack = new Selector("Steal with fall back");
+        stealWithFallBack.AddChild(stealSomething);
+        stealWithFallBack.AddChild (goToVan);
+
+        Selector beThief = new Selector("Be a thief");
+        beThief.AddChild(stealWithFallBack);
+        beThief.AddChild(runAway);
+
+        return beThief;
     }
 
     // public NodeState GoToDiamond() => GoPickUpDiamond();
@@ -141,13 +159,12 @@ public class RobberBehaviour : AgentBehaviour
 
     public NodeState CanSeeCop()
     {
-        
         return CanSee(CopAgent.transform.position, "Cop", 10, 120);
     }
 
     public NodeState FleeFromCop()
     {
-        return Flee(CopAgent.transform.position, 10);
+        return Flee(CopAgent.transform.position, 20);
     }
 
     // private NodeState GoToArt2()

@@ -552,7 +552,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6631964419132099031, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 30.976412
+      value: 22.37
       objectReference: {fileID: 0}
     - target: {fileID: 6631964419132099031, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_LocalPosition.y
@@ -560,7 +560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6631964419132099031, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.924757
+      value: 12.07
       objectReference: {fileID: 0}
     - target: {fileID: 6631964419132099031, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2223,11 +2223,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f01f3ecf6a7415646b726da6d78e01af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Diamond: {fileID: 1550492363}
-  MonaLisaPainting: {fileID: 1904932022}
   Van: {fileID: 864086524}
   BackDoor: {fileID: 919599686}
   FrontDoor: {fileID: 1791870521}
+  CopAgent: {fileID: 1347892765}
   art:
   - {fileID: 1550492363}
   - {fileID: 1904932022}
