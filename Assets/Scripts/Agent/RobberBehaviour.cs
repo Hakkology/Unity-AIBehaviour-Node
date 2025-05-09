@@ -131,19 +131,6 @@ public class RobberBehaviour : AgentBehaviour
         return NodeState.SUCCESS;
     }
 
-    // private NodeState GoPickUpMonaLisaPainting()
-    // {
-    //     if (!MonaLisaPainting.activeSelf) return NodeState.FAILURE;
-    //     NodeState state = GoToLocation(MonaLisaPainting.transform.position);
-    //     if (state == NodeState.SUCCESS)
-    //     {
-    //         currentObject = MonaLisaPainting;
-    //         MonaLisaPainting.transform.parent = this.gameObject.transform;
-    //     }
-        
-    //     return state;
-    // }
-
     private NodeState GoToArt(int index)
     {
         if (!art[index].activeSelf) return NodeState.FAILURE;
@@ -166,96 +153,6 @@ public class RobberBehaviour : AgentBehaviour
     {
         return Flee(CopAgent.transform.position, 20);
     }
-
-    // private NodeState GoToArt2()
-    // {
-    //     if (!art[1].activeSelf) return NodeState.FAILURE;
-    //     NodeState state = GoToLocation(art[1].transform.position);
-    //     if (state == NodeState.SUCCESS)
-    //     {
-    //         currentObject = art[1];
-    //         art[1].transform.parent = this.gameObject.transform;
-    //     }
-        
-    //     return state;
-    // }
-
-    // private NodeState GoToArt3()
-    // {
-    //     if (!art[2].activeSelf) return NodeState.FAILURE;
-    //     NodeState state = GoToLocation(art[2].transform.position);
-    //     if (state == NodeState.SUCCESS)
-    //     {
-    //         currentObject = art[2];
-    //         art[2].transform.parent = this.gameObject.transform;
-    //     }
-        
-    //     return state;
-    // }
-
-    // private NodeState GoToArt4()
-    // {
-    //     if (!art[3].activeSelf) return NodeState.FAILURE;
-    //     NodeState state = GoToLocation(art[3].transform.position);
-    //     if (state == NodeState.SUCCESS)
-    //     {
-    //         currentObject = art[3];
-    //         art[3].transform.parent = this.gameObject.transform;
-    //     }
-        
-    //     return state;
-    // }
-    // private NodeState GoToArt5()
-    // {
-    //     if (!art[4].activeSelf) return NodeState.FAILURE;
-    //     NodeState state = GoToLocation(art[4].transform.position);
-    //     if (state == NodeState.SUCCESS)
-    //     {
-    //         currentObject = art[4];
-    //         art[4].transform.parent = this.gameObject.transform;
-    //     }
-        
-    //     return state;
-    // }
-
-    // private NodeState GoToArt6()
-    // {
-    //     if (!art[5].activeSelf) return NodeState.FAILURE;
-    //     NodeState state = GoToLocation(art[5].transform.position);
-    //     if (state == NodeState.SUCCESS)
-    //     {
-    //         currentObject = art[5];
-    //         art[5].transform.parent = this.gameObject.transform;
-    //     }
-        
-    //     return state;
-    // }
-
-    // private NodeState GoToArt7()
-    // {
-    //     if (!art[6].activeSelf) return NodeState.FAILURE;
-    //     NodeState state = GoToLocation(art[6].transform.position);
-    //     if (state == NodeState.SUCCESS)
-    //     {
-    //         currentObject = art[6];
-    //         art[6].transform.parent = this.gameObject.transform;
-    //     }
-        
-    //     return state;
-    // }
-
-    // public NodeState GoPickUpDiamond()
-    // {
-    //     if (!Diamond.activeSelf) return NodeState.FAILURE;
-    //     NodeState state = GoToLocation(Diamond.transform.position);
-    //     if (state == NodeState.SUCCESS)
-    //     {
-    //         currentObject = Diamond;
-    //         Diamond.transform.parent = this.gameObject.transform;
-    //     }
-        
-    //     return state;
-    // }
 
     public NodeState DeliverGoods()
     {
