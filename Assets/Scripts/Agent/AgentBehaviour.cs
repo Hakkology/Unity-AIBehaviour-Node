@@ -14,12 +14,12 @@ public class AgentBehaviour : MonoBehaviour {
     WaitForSeconds NodeStateCheck;
     Vector3 rememberedLocation;
 
-    void Awake() 
+    protected virtual void Awake() 
     {
         agent = GetComponent<NavMeshAgent>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
         tree = new RootNode();
         tree.AddChild(ConfigureSequence());
@@ -98,5 +98,24 @@ public class AgentBehaviour : MonoBehaviour {
             rememberedLocation = this.transform.position + (transform.position - locationOfFear).normalized * distanceFear;
         }
         return GoToLocation(rememberedLocation);
+    }
+
+    public NodeState GoToDoor(GameObject door)
+    {
+        NodeState state = GoToLocation(door.transform.position);
+        if (state == NodeState.SUCCESS)
+        {
+            if (!door.GetComponent<Lock>().isLocked)
+            {
+                door.GetComponent<NavMeshObstacle>().enabled = false;
+                return NodeState.SUCCESS;
+            }
+
+            return NodeState.FAILURE;
+        }
+        else
+        {
+            return state;
+        }
     }
 }

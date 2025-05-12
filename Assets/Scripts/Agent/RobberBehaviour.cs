@@ -165,23 +165,4 @@ public class RobberBehaviour : AgentBehaviour
         
         return state;
     }
-
-    public NodeState GoToDoor(GameObject door)
-    {
-        NodeState state = GoToLocation(door.transform.position);
-        if (state == NodeState.SUCCESS)
-        {
-            if (!door.GetComponent<Lock>().isLocked)
-            {
-                door.GetComponent<NavMeshObstacle>().enabled = false;
-                return NodeState.SUCCESS;
-            }
-
-            return NodeState.FAILURE;
-        }
-        else
-        {
-            return state;
-        }
-    }
 }
