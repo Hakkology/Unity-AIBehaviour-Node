@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +22,12 @@ public class RobberBehaviour : AgentBehaviour
 
     [Range(0, 1000)]
     public int money = 800;
+
+    protected override void Start()
+    {
+        base.Start();
+        StartCoroutine(nameof(DecreaseMoney));
+    }
 
     public override Node ConfigureSequence()
     {
@@ -80,7 +85,11 @@ public class RobberBehaviour : AgentBehaviour
         conditions.AddChild(cantSeeCop);
         conditions.AddChild(invertMoney);
         stealConditions.AddChild(conditions);
+
         DependencySequence steal = new DependencySequence("Steal Something", stealConditions, agent);
+        steal.AddChild(openDoor);
+        steal.AddChild(stealSomething);
+        steal.AddChild(goToVan);
 
         // steal.AddChild(s1);
         // steal.AddChild(s2);
@@ -88,11 +97,9 @@ public class RobberBehaviour : AgentBehaviour
         // steal.AddChild(s4);
 
         // steal.AddChild(invertMoney);
-        steal.AddChild(openDoor);
-
         Selector stealWithFallBack = new Selector("Steal with fall back");
-        stealWithFallBack.AddChild(stealSomething);
-        stealWithFallBack.AddChild (goToVan);
+        stealWithFallBack.AddChild(steal);
+        stealWithFallBack.AddChild(goToVan);
 
         Selector beThief = new Selector("Be a thief");
         beThief.AddChild(stealWithFallBack);
@@ -100,6 +107,15 @@ public class RobberBehaviour : AgentBehaviour
 
         return beThief;
     }
+    IEnumerator DecreaseMoney()
+    {
+        while (true)
+        {
+            money = Mathf.Clamp(money - 20, 0, 1000);
+            yield return new WaitForSeconds(Random.Range(1,5));
+        }
+    }
+    
 
     // public NodeState GoToDiamond() => GoPickUpDiamond();
     // public NodeState GoToMonaLisaPainting() => GoPickUpMonaLisaPainting();
