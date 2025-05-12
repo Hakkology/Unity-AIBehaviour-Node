@@ -14,6 +14,7 @@ public class PatronBehaviour : AgentBehaviour
     protected override void Start()
     {
         base.Start();
+        StartCoroutine(nameof(IncreaseBoredom));
     }
 
     public override Node ConfigureSequence()
@@ -40,10 +41,22 @@ public class PatronBehaviour : AgentBehaviour
         return bePatron;
     }
 
+    IEnumerator IncreaseBoredom(){
+        while (true)
+        {
+            boredom = Mathf.Clamp(boredom + 40, 0, 1000);
+            yield return new WaitForSeconds(Random.Range(1,5));
+        }
+    }
+
     private NodeState GoToArt(int index)
     {
         if (!art[index].activeSelf) return NodeState.FAILURE;
         NodeState state = GoToLocation(art[index].transform.position);
+        if (state == NodeState.SUCCESS)
+        {
+            boredom = Mathf.Clamp(boredom - 500, 0, 1000);
+        }
         return state;
     }
 
@@ -56,6 +69,7 @@ public class PatronBehaviour : AgentBehaviour
     public NodeState GoHome()
     {
         NodeState state = GoToLocation(homeBase.transform.position);
+
         return state;
     }
 
