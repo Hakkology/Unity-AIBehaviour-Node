@@ -652,6 +652,10 @@ PrefabInstance:
       value: Cop
       objectReference: {fileID: 0}
     - target: {fileID: 6644603938449114179, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644603938449114179, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}

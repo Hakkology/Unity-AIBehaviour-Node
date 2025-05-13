@@ -102,8 +102,9 @@ public class RobberBehaviour : AgentBehaviour
         stealWithFallBack.AddChild(goToVan);
 
         Selector beThief = new Selector("Be a thief");
-        beThief.AddChild(stealWithFallBack);
         beThief.AddChild(runAway);
+        beThief.AddChild(stealWithFallBack);
+
 
         return beThief;
     }
@@ -175,8 +176,11 @@ public class RobberBehaviour : AgentBehaviour
         NodeState state = GoToLocation(Van.transform.position);
         if (state == NodeState.SUCCESS)
         {
-            currentObject.SetActive(false);
-            money += 300;
+            if (currentObject != null)
+            {
+                currentObject.SetActive(false);
+                money += 300;
+            }
         }
         
         return state;

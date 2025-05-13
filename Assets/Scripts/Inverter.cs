@@ -7,7 +7,7 @@ public class Inverter : Node
     public Inverter(string name) => NodeName = name;
     public override NodeState Process()
     {
-        NodeState childStatus = childNodes[currentChild].Process();
+        NodeState childStatus = childNodes[0].Process();
         if (childStatus == NodeState.RUNNING) return NodeState.RUNNING;
         if (childStatus == NodeState.FAILURE) 
             return NodeState.SUCCESS;
