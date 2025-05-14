@@ -10,6 +10,7 @@ public class PatronBehaviour : AgentBehaviour
 
     [Range(0, 1000)]
     public int boredom = 0;
+    public bool ticket = false;
 
     protected override void Start()
     {
@@ -36,6 +37,15 @@ public class PatronBehaviour : AgentBehaviour
         viewArt.AddChild(isOpen);
         viewArt.AddChild(isBored);
         viewArt.AddChild(goToFrontDoor);
+
+        Leaf noTicket = new Leaf("Wait For Ticket", NoTicket);
+        Leaf isWaiting = new Leaf("Waiting For Worker", IsWaiting);
+        RootNode waitForTicket = new RootNode();
+        waitForTicket.AddChild(noTicket);
+        LoopNode getTicket = new LoopNode("Ticket", waitForTicket);
+        getTicket.AddChild(isWaiting);
+
+        viewArt.AddChild(getTicket);
 
         RootNode whileBored = new RootNode();
         whileBored.AddChild(isBored);
@@ -104,5 +114,28 @@ public class PatronBehaviour : AgentBehaviour
             return NodeState.FAILURE;
         else
             return NodeState.SUCCESS;
+    }
+
+    public NodeState NoTicket(){
+        if(ticket || IsOpen() == NodeState.FAILURE)
+        {
+            return NodeState.FAILURE;
+        }
+        else
+        {
+            return NodeState.SUCCESS;
+        }
+    }
+
+    public NodeState IsWaiting() 
+    {
+        if (Blackboard.Instance.RegisterPatron(this.gameObject) == this.gameObject)
+        {
+            return NodeState.SUCCESS;
+        }
+        else
+        {
+            return NodeState.FAILURE;
+        }
     }
 }

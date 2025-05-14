@@ -8,6 +8,8 @@ public class Blackboard : MonoBehaviour
     public float timeOfDay;
     public TextMeshProUGUI clock;
 
+    public GameObject patron;
+
     private static Blackboard _instance;
     public static Blackboard Instance 
     {
@@ -44,5 +46,16 @@ public class Blackboard : MonoBehaviour
             timeOfDay = (timeOfDay + 1) % 24;  
             clock.text = $"{timeOfDay:00}:00";
         }
+    }
+
+    public GameObject RegisterPatron(GameObject patron){
+        if (patron == null){
+            this.patron = patron;
+        }
+        return patron;
+    }
+
+    public void DeregisterPatron(){
+        this.patron = null;
     }
 }
