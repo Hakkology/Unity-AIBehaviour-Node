@@ -367,6 +367,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &22528054
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -811,6 +812,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &151446252
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -868,6 +870,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &157444342
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1127,6 +1130,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &208985367
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2597,6 +2601,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &609744438
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2832,6 +2837,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &632139216
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3734,6 +3740,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &800915234
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3761,6 +3768,89 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 647a124cd5c1147a793fcacc25f6be1a, type: 3}
   m_PrefabInstance: {fileID: 631430678}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &873296521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 873296524}
+  - component: {fileID: 873296523}
+  - component: {fileID: 873296522}
+  m_Layer: 0
+  m_Name: Office
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &873296522
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873296521}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &873296523
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873296521}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &873296524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873296521}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.3, y: 2.5, z: 40.61}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &890699875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5165,6 +5255,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &1089297403
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5621,6 +5712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeOfDay: 0
   clock: {fileID: 708376684}
+  patron: {fileID: 0}
 --- !u!1 &1164174361 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1822160269786678409, guid: 8a40fb370ea9e3c4cb0b6250bbc0d124, type: 3}
@@ -5656,6 +5748,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &1164174364
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6220,6 +6313,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &1260545485
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6277,6 +6371,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &1279629559
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6692,6 +6787,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &1368306642
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6959,6 +7055,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &1507151586
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7610,6 +7707,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &1602188495
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8887,6 +8985,7 @@ MonoBehaviour:
   frontDoor: {fileID: 1791870521}
   homeBase: {fileID: 1289645610}
   boredom: 0
+  ticket: 0
 --- !u!195 &2027627829
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9291,6 +9390,7 @@ SceneRoots:
   - {fileID: 1791870525}
   - {fileID: 919599690}
   - {fileID: 1289645613}
+  - {fileID: 873296524}
   - {fileID: 1299204458}
   - {fileID: 1153877369}
   - {fileID: 764772600}
