@@ -29,16 +29,33 @@ public class PatronBehaviour : AgentBehaviour
         Leaf goToFrontDoor = new Leaf("Go To Front Door", GoToFrontDoor);
         Leaf goToHome = new Leaf("Go Home", GoHome);
         Leaf isBored = new Leaf("Is Bored?", IsBored);
+        Leaf isOpen = new Leaf("Is Open?", IsOpen);
 
         Sequence viewArt = new Sequence("View Art");
+        
+        viewArt.AddChild(isOpen);
         viewArt.AddChild(isBored);
         viewArt.AddChild(goToFrontDoor);
-        viewArt.AddChild(selectObject);
+
+        RootNode whileBored = new RootNode();
+        whileBored.AddChild(isBored);
+        LoopNode lookAtPaintings = new LoopNode("Look", whileBored);
+        lookAtPaintings.AddChild(selectObject);
+        viewArt.AddChild(lookAtPaintings);
+
         viewArt.AddChild(goToHome);
 
-        Selector bePatron = new Selector("Be An Art Patron");
+        RootNode galleryOpenCondition = new RootNode();
+        galleryOpenCondition.AddChild(isOpen);
+
+        DependencySequence bePatron = new DependencySequence("Be An Art Patron", galleryOpenCondition, agent);
         bePatron.AddChild(viewArt);
-        return bePatron;
+
+        Selector viewArtWithFallback = new Selector("View Art with Fallback");
+        viewArtWithFallback.AddChild(bePatron);
+        viewArtWithFallback.AddChild(goToHome);
+
+        return viewArtWithFallback;
     }
 
     IEnumerator IncreaseBoredom(){
@@ -55,7 +72,7 @@ public class PatronBehaviour : AgentBehaviour
         NodeState state = GoToLocation(art[index].transform.position);
         if (state == NodeState.SUCCESS)
         {
-            boredom = Mathf.Clamp(boredom - 500, 0, 1000);
+            boredom = Mathf.Clamp(boredom - 150, 0, 1000);
         }
         return state;
     }
@@ -81,5 +98,11 @@ public class PatronBehaviour : AgentBehaviour
             return NodeState.SUCCESS;
     }
 
-
+    public NodeState IsOpen()
+    {
+        if (Blackboard.Instance.timeOfDay < 9 || Blackboard.Instance.timeOfDay > 17)
+            return NodeState.FAILURE;
+        else
+            return NodeState.SUCCESS;
+    }
 }
