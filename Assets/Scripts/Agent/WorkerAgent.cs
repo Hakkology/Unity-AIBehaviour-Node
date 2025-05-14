@@ -8,7 +8,14 @@ public class WorkerAgent : AgentBehaviour
     // Start is called before the first frame update
     public override Node ConfigureSequence()
     {
-        return base.ConfigureSequence();
+        Leaf goToPatron = new Leaf("Go To Patron", GoToPatron);
+        Leaf goToOffice = new Leaf("Go To Patron", GoToOffice);
+
+        Selector beWorker = new Selector("Be Worker");
+        beWorker.AddChild(goToPatron);
+        beWorker.AddChild(goToOffice);
+
+        return beWorker;
     }
 
     public NodeState GoToPatron(){

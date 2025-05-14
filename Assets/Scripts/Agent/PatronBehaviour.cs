@@ -129,7 +129,7 @@ public class PatronBehaviour : AgentBehaviour
 
     public NodeState IsWaiting() 
     {
-        if (Blackboard.Instance.RegisterPatron(this.gameObject) == this.gameObject)
+        if (Blackboard.Instance.RegisterPatron(this.gameObject))
         {
             return NodeState.SUCCESS;
         }

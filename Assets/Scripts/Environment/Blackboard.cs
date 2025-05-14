@@ -8,7 +8,7 @@ public class Blackboard : MonoBehaviour
     public float timeOfDay;
     public TextMeshProUGUI clock;
 
-    public GameObject patron;
+    public Stack<GameObject> Patrons = new Stack<GameObject>();
 
     private static Blackboard _instance;
     public static Blackboard Instance 
@@ -48,14 +48,12 @@ public class Blackboard : MonoBehaviour
         }
     }
 
-    public GameObject RegisterPatron(GameObject patron){
-        if (patron == null){
-            this.patron = patron;
-        }
-        return patron;
+    public bool RegisterPatron(GameObject patron){
+        Patrons.Push(patron);
+        return true;
     }
 
     public void DeregisterPatron(){
-        this.patron = null;
+        //this.patron = null;
     }
 }
