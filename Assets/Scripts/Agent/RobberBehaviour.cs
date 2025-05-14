@@ -51,8 +51,13 @@ public class RobberBehaviour : AgentBehaviour
         openDoor.AddChild(goToBackDoor);
 
         // s1
+        Leaf isOpen = new Leaf("Is Open?", IsOpen);
+        Inverter isClosed = new Inverter("Is Closed");
+
         Leaf hasGotMoney = new Leaf("Has Money", HasMoney);
         Inverter invertMoney = new Inverter("Invert Money");
+
+        isClosed.AddChild(isOpen);
         invertMoney.AddChild(hasGotMoney);
 
         // kaçış
@@ -82,6 +87,7 @@ public class RobberBehaviour : AgentBehaviour
 
         RootNode stealConditions = new RootNode("Steal Conditions");
         Sequence conditions = new Sequence ("Conditions");
+        conditions.AddChild(isClosed);
         conditions.AddChild(cantSeeCop);
         conditions.AddChild(invertMoney);
         stealConditions.AddChild(conditions);
@@ -148,6 +154,14 @@ public class RobberBehaviour : AgentBehaviour
         return NodeState.SUCCESS;
     }
 
+    public NodeState IsOpen()
+    {
+        if (Blackboard.Instance.timeOfDay < 9 || Blackboard.Instance.timeOfDay > 17)
+            return NodeState.FAILURE;
+        else
+            return NodeState.SUCCESS;
+    }
+
     private NodeState GoToArt(int index)
     {
         if (!art[index].activeSelf) return NodeState.FAILURE;
@@ -180,6 +194,7 @@ public class RobberBehaviour : AgentBehaviour
             {
                 currentObject.SetActive(false);
                 money += 300;
+                currentObject = null;
             }
         }
         
