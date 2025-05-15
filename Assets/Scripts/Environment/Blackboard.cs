@@ -10,6 +10,9 @@ public class Blackboard : MonoBehaviour
 
     public Stack<GameObject> Patrons = new Stack<GameObject>();
 
+    public int openTime = 5;
+    public int closeTime = 23;
+
     private static Blackboard _instance;
     public static Blackboard Instance 
     {
@@ -43,7 +46,11 @@ public class Blackboard : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1);
-            timeOfDay = (timeOfDay + 1) % 24;  
+            timeOfDay = (timeOfDay + 1) % 24;
+            if (timeOfDay == closeTime)
+            {
+                Patrons.Clear();
+            }
             clock.text = $"{timeOfDay:00}:00";
         }
     }

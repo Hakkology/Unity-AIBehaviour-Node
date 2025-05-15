@@ -153,15 +153,6 @@ public class RobberBehaviour : AgentBehaviour
             return NodeState.FAILURE;
         return NodeState.SUCCESS;
     }
-
-    public NodeState IsOpen()
-    {
-        if (Blackboard.Instance.timeOfDay < 9 || Blackboard.Instance.timeOfDay > 17)
-            return NodeState.FAILURE;
-        else
-            return NodeState.SUCCESS;
-    }
-
     private NodeState GoToArt(int index)
     {
         if (!art[index].activeSelf) return NodeState.FAILURE;

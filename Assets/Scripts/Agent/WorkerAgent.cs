@@ -5,6 +5,7 @@ using UnityEngine;
 public class WorkerAgent : AgentBehaviour
 {
     public GameObject Office;
+    private GameObject patron;
     // Start is called before the first frame update
     public override Node ConfigureSequence()
     {
@@ -19,11 +20,16 @@ public class WorkerAgent : AgentBehaviour
     }
 
     public NodeState GoToPatron(){
-        if(Blackboard.Instance.patron == null) return NodeState.FAILURE;
-        NodeState state = GoToLocation(Blackboard.Instance.patron.transform.position);
-        if(state == NodeState.SUCCESS){
-            Blackboard.Instance.patron.GetComponent<PatronBehaviour>().ticket = true;
-            Blackboard.Instance.DeregisterPatron();
+        
+        if(Blackboard.Instance.Patrons.Count == 0) return NodeState.FAILURE;
+
+        patron = Blackboard.Instance.Patrons.Pop();
+        NodeState state = GoToLocation(patron.transform.position);
+        
+        if (state == NodeState.SUCCESS)
+        {
+            patron.GetComponent<PatronBehaviour>().ticket = true;
+            patron = null;
         }
         return state;
     }

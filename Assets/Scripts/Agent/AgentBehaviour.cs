@@ -4,8 +4,9 @@ using UnityEngine.AI;
 
 public enum ActionState {IDLE, WORKING};
 
-public class AgentBehaviour : MonoBehaviour {
-    
+public class AgentBehaviour : MonoBehaviour
+{
+
     protected ActionState state = ActionState.IDLE;
     protected RootNode tree;
     protected NodeState treeStatus = NodeState.RUNNING;
@@ -14,7 +15,7 @@ public class AgentBehaviour : MonoBehaviour {
     WaitForSeconds NodeStateCheck;
     Vector3 rememberedLocation;
 
-    protected virtual void Awake() 
+    protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
     }
@@ -57,9 +58,9 @@ public class AgentBehaviour : MonoBehaviour {
         if (state == ActionState.IDLE)
         {
             agent.SetDestination(destination);
-            state =ActionState.WORKING;
+            state = ActionState.WORKING;
         }
-        else if(Vector3.Distance(agent.pathEndPosition, destination) >= 2)
+        else if (Vector3.Distance(agent.pathEndPosition, destination) >= 2)
         {
             state = ActionState.IDLE;
             return NodeState.FAILURE;
@@ -82,7 +83,7 @@ public class AgentBehaviour : MonoBehaviour {
             RaycastHit hitInfo;
             if (Physics.Raycast(this.transform.position, directionToTarget, out hitInfo))
             {
-                if(hitInfo.collider.gameObject.CompareTag(tag))
+                if (hitInfo.collider.gameObject.CompareTag(tag))
                 {
                     return NodeState.SUCCESS;
                 }
@@ -118,4 +119,13 @@ public class AgentBehaviour : MonoBehaviour {
             return state;
         }
     }
+    
+    public NodeState IsOpen()
+    {
+        if (Blackboard.Instance.timeOfDay < Blackboard.Instance.openTime || Blackboard.Instance.timeOfDay > Blackboard.Instance.closeTime)
+            return NodeState.FAILURE;
+        else
+            return NodeState.SUCCESS;
+    }
+
 }
