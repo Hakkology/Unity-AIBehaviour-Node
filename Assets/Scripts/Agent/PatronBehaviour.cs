@@ -11,6 +11,7 @@ public class PatronBehaviour : AgentBehaviour
     [Range(0, 1000)]
     public int boredom = 0;
     public bool ticket = false;
+    public bool isWaiting = false;
 
     protected override void Start()
     {
@@ -96,7 +97,7 @@ public class PatronBehaviour : AgentBehaviour
     public NodeState GoHome()
     {
         NodeState state = GoToLocation(homeBase.transform.position);
-
+        isWaiting = false;
         return state;
     }
 
@@ -107,15 +108,6 @@ public class PatronBehaviour : AgentBehaviour
         else
             return NodeState.SUCCESS;
     }
-
-    public NodeState IsOpen()
-    {
-        if (Blackboard.Instance.timeOfDay < 9 || Blackboard.Instance.timeOfDay > 17)
-            return NodeState.FAILURE;
-        else
-            return NodeState.SUCCESS;
-    }
-
     public NodeState NoTicket(){
         if(ticket || IsOpen() == NodeState.FAILURE)
         {
@@ -131,6 +123,7 @@ public class PatronBehaviour : AgentBehaviour
     {
         if (Blackboard.Instance.RegisterPatron(this.gameObject))
         {
+            isWaiting = true;
             return NodeState.SUCCESS;
         }
         else
